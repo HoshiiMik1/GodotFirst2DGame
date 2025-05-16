@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://bvwg0o3oxiqj7"]
+
+[ext_resource type="Script" uid="uid://d2hydrp8y33ht" path="res://Scripts/Game/enemy.gd" id="1_1bnj1"]
+[ext_resource type="Texture2D" uid="uid://gsxme4dujqpc" path="res://Assets/2d-battle-tank-game-assets/PNG/Hulls_Color_B/Hull_01.png" id="2_ao0hg"]
+[ext_resource type="PackedScene" uid="uid://b2atr88al43y1" path="res://Level/Bullet.tscn" id="2_xy6ai"]
+[ext_resource type="Texture2D" uid="uid://dqbg8ka0fla72" path="res://Assets/2d-battle-tank-game-assets/PNG/Weapon_Color_B/Gun_01.png" id="3_xy6ai"]
+[ext_resource type="Texture2D" uid="uid://dm0x84y10ttok" path="res://Assets/2d-battle-tank-game-assets/PNG/Tracks/Track_2_A.png" id="4_opr2r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f76iv"]
+size = Vector2(184, 244)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_napcp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_opr2r")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="Area2D" groups=["Enemy"]]
+rotation = 3.14159
+scale = Vector2(0.25, 0.25)
+script = ExtResource("1_1bnj1")
+bullet_scene = ExtResource("2_xy6ai")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3.29016e-06, 6)
+shape = SubResource("RectangleShape2D_f76iv")
+metadata/_edit_lock_ = true
+
+[node name="TankB" type="Sprite2D" parent="."]
+texture = ExtResource("2_ao0hg")
+metadata/_edit_lock_ = true
+
+[node name="Weapon" type="Sprite2D" parent="TankB"]
+position = Vector2(1, 60)
+texture = ExtResource("3_xy6ai")
+offset = Vector2(-1, -60)
+metadata/_edit_lock_ = true
+
+[node name="sight" type="Area2D" parent="TankB/Weapon"]
+position = Vector2(-405, -436)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TankB/Weapon/sight"]
+position = Vector2(3.99996, -180)
+polygon = PackedVector2Array(400, 427, 528, -48.0001, 272, -48.0001)
+metadata/_edit_lock_ = true
+
+[node name="Marker2D" type="Marker2D" parent="TankB/Weapon"]
+position = Vector2(-0.999665, -192)
+
+[node name="TrackL" type="AnimatedSprite2D" parent="TankB"]
+z_index = -1
+position = Vector2(-79, 4)
+sprite_frames = SubResource("SpriteFrames_napcp")
+animation = &"Idle"
+metadata/_edit_lock_ = true
+
+[node name="TrackR" type="AnimatedSprite2D" parent="TankB"]
+z_index = -1
+position = Vector2(79, 1)
+sprite_frames = SubResource("SpriteFrames_napcp")
+animation = &"Idle"
+metadata/_edit_lock_ = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_entered" from="TankB/Weapon/sight" to="." method="_on_sight_area_entered"]

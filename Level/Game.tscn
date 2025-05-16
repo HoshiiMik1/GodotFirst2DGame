@@ -1,0 +1,246 @@
+[gd_scene load_steps=25 format=3 uid="uid://ddnnlirm8fcpv"]
+
+[ext_resource type="Script" uid="uid://cxv70qi3ayugj" path="res://Scripts/Game/game.gd" id="1_4mp0b"]
+[ext_resource type="Script" uid="uid://bwv51gydm8t07" path="res://Scripts/Game/player.gd" id="1_nhav5"]
+[ext_resource type="Texture2D" uid="uid://biereqsucvtu4" path="res://Assets/2d-battle-tank-game-assets/PNG/Hulls_Color_A/Hull_01.png" id="1_uafkm"]
+[ext_resource type="PackedScene" uid="uid://bvwg0o3oxiqj7" path="res://Level/Enemy.tscn" id="2_cjxwd"]
+[ext_resource type="Texture2D" uid="uid://c4limj8lyox8g" path="res://Assets/2d-battle-tank-game-assets/PNG/Weapon_Color_A/Gun_01.png" id="2_xfgkq"]
+[ext_resource type="Script" uid="uid://bop0pkqo6o7uk" path="res://Scripts/Game/tank_a.gd" id="2_xjury"]
+[ext_resource type="PackedScene" uid="uid://b2atr88al43y1" path="res://Level/Bullet.tscn" id="3_ag8be"]
+[ext_resource type="Texture2D" uid="uid://ugae0jabdsla" path="res://Assets/2d-battle-tank-game-assets/PNG/Tracks/Track_1_A.png" id="3_xjury"]
+[ext_resource type="Texture2D" uid="uid://ci1gqgxdlupji" path="res://Assets/2d-battle-tank-game-assets/PNG/Tracks/Track_1_B.png" id="4_ag8be"]
+[ext_resource type="Script" uid="uid://bnd3f6oav2pmk" path="res://Scripts/Game/pause_menu.gd" id="6_xjury"]
+[ext_resource type="Script" uid="uid://d4lbg5tjcannd" path="res://Scripts/Game/hud.gd" id="10_hfuyw"]
+[ext_resource type="Texture2D" uid="uid://dnkp88hsvh5ko" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Sprites/Sprite_Effects_Explosion_000.png" id="12_evtha"]
+[ext_resource type="Texture2D" uid="uid://crra8281jv2sm" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Sprites/Sprite_Effects_Explosion_001.png" id="13_0n0wx"]
+[ext_resource type="Texture2D" uid="uid://bpjyy7o2ohqc3" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Sprites/Sprite_Effects_Explosion_002.png" id="14_n7wbc"]
+[ext_resource type="Texture2D" uid="uid://dunlsdaem21qu" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Sprites/Sprite_Effects_Explosion_003.png" id="15_2vbhi"]
+[ext_resource type="Texture2D" uid="uid://d24ee8jk7xsyk" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Sprites/Sprite_Effects_Explosion_004.png" id="16_xqdkb"]
+[ext_resource type="Texture2D" uid="uid://cjiwbksny6d8j" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Sprites/Sprite_Effects_Explosion_005.png" id="17_cr5gh"]
+[ext_resource type="Texture2D" uid="uid://5jlj78eqma8f" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Sprites/Sprite_Effects_Explosion_006.png" id="18_af15m"]
+[ext_resource type="Texture2D" uid="uid://dk714glnh3617" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Sprites/Sprite_Effects_Explosion_007.png" id="19_yvlg8"]
+[ext_resource type="Texture2D" uid="uid://qowobx4up6d3" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Sprites/Sprite_Effects_Explosion_008.png" id="20_roc22"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ag8be"]
+size = Vector2(64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dcia3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_evtha")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_0n0wx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_n7wbc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_2vbhi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_xqdkb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_cr5gh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_af15m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_yvlg8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_roc22")
+}],
+"loop": false,
+"name": &"Dead",
+"speed": 15.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nhav5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_xjury")
+}],
+"loop": false,
+"name": &"Idle",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_xjury")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ag8be")
+}],
+"loop": true,
+"name": &"Move",
+"speed": 24.0
+}]
+
+[sub_resource type="Curve2D" id="Curve2D_hfuyw"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 218.417, 181.421, 0, 0, 0, 0, 436.834, 181.421, 0, 0, 0, 0, 436.834, 362.843, 0, 0, 0, 0, 218.417, 362.843, 0, 0, 0, 0, 218.417, 181.421)
+}
+point_count = 5
+
+[node name="Game" type="Node"]
+script = ExtResource("1_4mp0b")
+enemy_scene = ExtResource("2_cjxwd")
+
+[node name="Player" type="Area2D" parent="." groups=["Player"]]
+position = Vector2(203, 610)
+script = ExtResource("1_nhav5")
+enemy_scene = ExtResource("2_cjxwd")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_ag8be")
+metadata/_edit_lock_ = true
+
+[node name="Dead" type="AnimatedSprite2D" parent="Player"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_dcia3")
+animation = &"Dead"
+frame = 8
+frame_progress = 1.0
+metadata/_edit_lock_ = true
+
+[node name="TankA" type="Sprite2D" parent="Player"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_uafkm")
+script = ExtResource("2_xjury")
+bullet_scene = ExtResource("3_ag8be")
+
+[node name="Weapon" type="Sprite2D" parent="Player/TankA"]
+position = Vector2(1.26362e-05, 38)
+texture = ExtResource("2_xfgkq")
+offset = Vector2(-0.529358, -57.0599)
+metadata/_edit_lock_ = true
+
+[node name="bullet_tip" type="Marker2D" parent="Player/TankA/Weapon"]
+position = Vector2(0, -190)
+
+[node name="TrackL" type="AnimatedSprite2D" parent="Player/TankA"]
+z_index = -1
+position = Vector2(-79, 6.2)
+sprite_frames = SubResource("SpriteFrames_nhav5")
+animation = &"Idle"
+metadata/_edit_lock_ = true
+
+[node name="TrackR" type="AnimatedSprite2D" parent="Player/TankA"]
+z_index = -1
+position = Vector2(79, 6.2)
+sprite_frames = SubResource("SpriteFrames_nhav5")
+animation = &"Move"
+metadata/_edit_lock_ = true
+
+[node name="PauseMenu" type="Control" parent="."]
+process_mode = 2
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_xjury")
+
+[node name="CenterContainer" type="CenterContainer" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/CenterContainer"]
+layout_mode = 2
+
+[node name="Pause" type="Label" parent="PauseMenu/CenterContainer/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Pause"
+
+[node name="Resume" type="Button" parent="PauseMenu/CenterContainer/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+text = "Resume"
+
+[node name="Quit" type="Button" parent="PauseMenu/CenterContainer/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+text = "Quit"
+
+[node name="background" type="ColorRect" parent="PauseMenu"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.439216, 0.439216, 0.439216, 0.72549)
+
+[node name="EnemyPath" type="Path2D" parent="."]
+scale = Vector2(0.586035, 0.705539)
+curve = SubResource("Curve2D_hfuyw")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyPath"]
+position = Vector2(218.417, 181.421)
+
+[node name="EnemyTimer" type="Timer" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="." groups=["Score"]]
+script = ExtResource("10_hfuyw")
+
+[node name="ScoreLabel" type="Label" parent="HUD"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.5
+offset_right = 28.5
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Score:0"
+metadata/_edit_lock_ = true
+
+[node name="GameOver" type="CenterContainer" parent="HUD"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/GameOver"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="GameoverLabel" type="Label" parent="HUD/GameOver/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Game Over"
+
+[node name="NewGame" type="Button" parent="HUD/GameOver/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "NewGame"
+
+[node name="Quit" type="Button" parent="HUD/GameOver/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Quit"
+
+[connection signal="game_over" from="." to="HUD" method="_on_game_game_over"]
+[connection signal="area_entered" from="Player" to="Player" method="_on_area_entered"]
+[connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
+[connection signal="pressed_pause" from="Player/TankA" to="PauseMenu" method="_on_tank_a_pressed_pause"]
+[connection signal="timeout" from="EnemyTimer" to="." method="_on_enemy_timer_timeout"]

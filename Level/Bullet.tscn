@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://b2atr88al43y1"]
+
+[ext_resource type="Texture2D" uid="uid://c2jjisw04w8do" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Heavy_Shell.png" id="1_cd4ok"]
+[ext_resource type="Script" uid="uid://diusmddbccnms" path="res://Scripts/Game/bullet.gd" id="2_ftb2b"]
+[ext_resource type="Texture2D" uid="uid://dx65hx6t1dea2" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Sprites/Sprite_Fire_Shots_Shot_A_000.png" id="3_c72j5"]
+[ext_resource type="Texture2D" uid="uid://blvc578o62y68" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Sprites/Sprite_Fire_Shots_Shot_A_001.png" id="4_ouyji"]
+[ext_resource type="Texture2D" uid="uid://b0bv0a2yu6515" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Sprites/Sprite_Fire_Shots_Shot_A_002.png" id="5_n1uau"]
+[ext_resource type="Texture2D" uid="uid://c52q4jay824om" path="res://Assets/2d-battle-tank-game-assets/PNG/Effects/Sprites/Sprite_Fire_Shots_Shot_A_003.png" id="6_wj475"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cd4ok"]
+height = 62.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gkdsf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_c72j5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ouyji")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_n1uau")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_wj475")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"Fire",
+"speed": 24.0
+}]
+
+[node name="Bullet" type="Area2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("2_ftb2b")
+
+[node name="BulletSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_cd4ok")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_cd4ok")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+enable_node_path = NodePath("../BulletSprite")
+
+[node name="shoting" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gkdsf")
+animation = &"Fire"
